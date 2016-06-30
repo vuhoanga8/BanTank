@@ -1,4 +1,3 @@
-//var TankOnline = {};
 var TankOnline = {
   map : [
     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -31,6 +30,11 @@ var preload = function(){
   TankOnline.game.load.image('tankLeft', './images/tank_player1_left_c0_t1_s1.png');
   TankOnline.game.load.image('tankRight', './images/tank_player1_right_c0_t1_s1.png');
 
+  TankOnline.game.load.image('tankDown1', './images/tank_power_down_c0_t1.png');
+  TankOnline.game.load.image('tankUp1', './images/tank_power_up_c0_t1.png');
+  TankOnline.game.load.image('tankLeft1', './images/tank_power_left_c0_t1.png');
+  TankOnline.game.load.image('tankRight1', './images/tank_power_right_c0_t1.png');
+
   TankOnline.game.load.image('bulletDown', './images/bullet_down.png');
   TankOnline.game.load.image('bulletUp', './images/bullet_up.png');
   TankOnline.game.load.image('bulletLeft', './images/bullet_left.png');
@@ -51,7 +55,7 @@ var create = function(){
   allyGroup = TankOnline.game.add.physicsGroup();
 
   tank = new Tank(window.innerWidth/2, window.innerHeight/2, allyGroup);
-  tank1 = new Tank(window.innerWidth/2 -250, window.innerHeight/2 -250, allyGroup);
+  tank1 = new Tank1(window.innerWidth/2 -250, window.innerHeight/2 -250, allyGroup);
   for(var i =0; i<10; i++){
     new Tank(Math.random()*TankOnline.game.world.bounds.width,
               Math.random()*TankOnline.game.world.bounds.height, enemyGroup);
@@ -74,7 +78,7 @@ var update = function(){
   TankOnline.game.physics.arcade.overlap(TankOnline.bulletGroup, enemyGroup, onBulletHitEnemy, null, this);
 
   var direction = new Phaser.Point();
-  var direction1 = new Phaser.Point();
+  var direc1 = new Phaser.Point();
   if(TankOnline.keyboard.isDown(Phaser.KeyCode.LEFT)) direction.x = -1;
   else if (TankOnline.keyboard.isDown(Phaser.KeyCode.RIGHT)) direction.x = 1;
   else direction.x = 0;
@@ -83,16 +87,16 @@ var update = function(){
   else if (TankOnline.keyboard.isDown(Phaser.KeyCode.DOWN)) direction.y = 1;
   else direction.y = 0;
 
-  if(TankOnline.keyboard.isDown(Phaser.KeyCode.A)) direction1.x = -1;
-  else if (TankOnline.keyboard.isDown(Phaser.KeyCode.D)) direction1.x = 1;
-  else direction1.x = 0;
+  if(TankOnline.keyboard.isDown(Phaser.KeyCode.A)) direc1.x = -1;
+  else if (TankOnline.keyboard.isDown(Phaser.KeyCode.D)) direc1.x = 1;
+  else direc1.x = 0;
 
-  if(TankOnline.keyboard.isDown(Phaser.KeyCode.W)) direction1.y = -1;
-  else if (TankOnline.keyboard.isDown(Phaser.KeyCode.S)) direction1.y = 1;
-  else direction1.y = 0;
+  if(TankOnline.keyboard.isDown(Phaser.KeyCode.W)) direc1.y = -1;
+  else if (TankOnline.keyboard.isDown(Phaser.KeyCode.S)) direc1.y = 1;
+  else direc1.y = 0;
 
   tank.update(direction);
-  tank1.update(direction1);
+  tank1.update(direc1);
   if(TankOnline.keyboard.isDown(Phaser.KeyCode.SPACEBAR)){
     tank.fire();
   }
