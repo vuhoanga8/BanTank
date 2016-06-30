@@ -9,7 +9,7 @@ class Tank{
     this.sprite.health = 5;
   }
 
-  update(direction, direction1){
+  update(direction){
     if(direction.x < 0){
       this.sprite.body.velocity.x = -250;
       this.sprite.loadTexture('tankLeft');
@@ -40,7 +40,8 @@ class Tank{
   }
 
   fire(){
-    if(TankOnline.game.time.now - this.lastShotTime > 200){
+    if(TankOnline.game.time.now - this.lastShotTime > 200)
+    {
       this.lastShotTime = TankOnline.game.time.now;
       new Bullet(this);
     }
