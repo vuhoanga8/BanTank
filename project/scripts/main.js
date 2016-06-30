@@ -68,11 +68,10 @@ var create = function(){
 
 var update = function(){
   TankOnline.game.physics.arcade.collide(tank.sprite, wallGroup);
+  TankOnline.game.physics.arcade.collide(tank1.sprite, wallGroup);
+
   TankOnline.game.physics.arcade.overlap(TankOnline.bulletGroup, wallGroup, onBulletHitWall, null, this);
   TankOnline.game.physics.arcade.overlap(TankOnline.bulletGroup, enemyGroup, onBulletHitEnemy, null, this);
-
-
-
 
   var direction = new Phaser.Point();
   var direction1 = new Phaser.Point();
