@@ -1,5 +1,5 @@
 class Tank{
-  constructor(x, y,group){
+  constructor(x, y, group){
     this.sprite = group.create(x, y, 'tankDown');
     TankOnline.game.physics.arcade.enable(this.sprite);
     this.sprite.anchor.set(0.5,0.5);
@@ -36,14 +36,6 @@ class Tank{
     }
     else{
       this.sprite.body.velocity.y = 0;
-    }
-  }
-
-  fire(){
-    if(TankOnline.game.time.now - this.lastShotTime > 200)
-    {
-      this.lastShotTime = TankOnline.game.time.now;
-      new Bullet(this);
     }
   }
 }
