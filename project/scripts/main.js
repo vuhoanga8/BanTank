@@ -43,6 +43,7 @@ var preload = function(){
 }
 
 var create = function(){
+  TankOnline.client = new Client();
   TankOnline.game.physics.startSystem(Phaser.Physics.ARCADE);
   TankOnline.keyboard = TankOnline.game.input.keyboard;
 
