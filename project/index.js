@@ -9,9 +9,44 @@ app.get('/', function(req, res){
   res.sendFile(__dirname + 'index.html');
 });
 
+var players = [];
+var getPlayerById = function(id){
+  for(var i=0;i<players.length;i++){
+    if(players[i].id == id){
+      return players[i];
+    }
+  }
+}
+
 io.on('connection', function(socket){
   console.log('New User Connected');
-  socket.emit('connected','You have connected to server');
+
+  // Send all players' data to the new player
+  socket.emit('other_players', players);
+
+  var newPlayerInfo = {
+    id  : socket.id,
+    x   : Math.random()*3200,
+    y   : Math.random()*800
+  }
+  // Tell the new player where to initiate his tank
+  socket.emit('connected', newPlayerInfo);
+  // Tell all other players where to initiate new player's tank
+  socket.broadcast.emit('new_player_connected', newPlayerInfo);
+  // Add new player's info to the array of all players
+  players.push(newPlayerInfo);
+
+  socket.on('tank_moved', function(data){
+    var playerInfo = getPlayerById(data.id);
+    playerInfo.x = data.position.x;
+    playerInfo.y = data.position.y;
+    socket.broadcast.emit('player_moved', data);
+  });
+  socket.on('tank_fired', function(data){
+    var playerInfo = getPlayerById(data.id);
+    playerInfo.direction = data.direction;
+    socket.broadcast.emit('player_fired', data);
+  });
 });
 
 http.listen(6969, function(){
