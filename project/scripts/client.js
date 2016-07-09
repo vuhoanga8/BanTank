@@ -1,7 +1,7 @@
 class Client{
   constructor(){
     this.socket = io();
-
+    this.id = this.socket.id;
     this.socket.on('connected', function(msg){
       TankOnline.onConnected(msg);
     });
@@ -17,6 +17,12 @@ class Client{
     this.socket.on('player_fired', function(msg){
       TankOnline.onPlayerFired(msg);
     });
+    this.socket.on('player_died', function(msg){
+      TankOnline.onPlayerDied(msg);
+    });
+    this.socket.on('player_explore', function(msg){
+      TankOnline.onPlayerExplore(msg);
+    });
   }
 
   reportMove(id, direction, position){
@@ -31,6 +37,13 @@ class Client{
       id        : id,
       direction : direction,
       position  : position
+    });
+  }
+  reportDie(id, killer)
+  {
+    this.socket.emit('tank_died', {
+      id: id,
+      killerId: killer
     });
   }
 }

@@ -47,6 +47,10 @@ io.on('connection', function(socket){
     playerInfo.direction = data.direction;
     socket.broadcast.emit('player_fired', data);
   });
+  socket.on('tank_died', function(data){
+    var playerInfo = getPlayerById(data.id);
+    socket.broadcast.emit('player_died', data);
+  });
 });
 
 http.listen(6969, function(){
